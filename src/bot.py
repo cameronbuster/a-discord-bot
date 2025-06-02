@@ -6,7 +6,7 @@ from discord import app_commands
 from discord.ext import commands
 from discord_utils.message_fetcher import fetch_recent_channel_messages, fetch_recent_user_messages
 from llm.model import AutismModel
-from config import DISCORD_TOKEN, CHANNEL_MESSAGE_HISTORY_LIMIT, USER_MESSAGE_HISTORY_LIMIT, DEV_GUILD_ID
+from config import BOT_TOKEN, CHANNEL_MESSAGE_HISTORY_LIMIT, USER_MESSAGE_HISTORY_LIMIT, DEV_GUILD_ID
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -79,4 +79,4 @@ async def on_message(message):
 
     print(f'✅ Synced {len(new_names)} commands to Server (guild: {DEV_GUILD_ID})')
 
-bot.run(DISCORD_TOKEN)
+bot.run(BOT_TOKEN)
