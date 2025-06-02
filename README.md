@@ -1,18 +1,17 @@
-# Discord Autism Bot
+# A Discord Bot
 
-This project is a Discord bot that measures the "autism level" of users based on their last X number of messages. It utilizes a free open-source LLM model from HuggingFace and the SentenceTransformers library to analyze user messages and calculate autism levels.
+This project is a Discord bot that measures the "autism level" of channels users based on their last X number of messages. It utilizes a free open-source LLM model from HuggingFace and the SentenceTransformers library to analyze user messages and calculate autism levels.
 
 ## Features
 
 - Measures autism levels based on user messages.
-- Calculates the average autism level of the most active 15 users in the Discord server.
 - Fetches messages from Discord channels and users.
 - Utilizes an LLM model for message analysis.
 
 ## Project Structure
 
 ```
-discord-autism-bot
+a-discord-bot
 ├── src
 │   ├── main.py          # Entry point of the Discord bot
 │   ├── bot.py           # Handles interactions with the Discord API
@@ -21,7 +20,6 @@ discord-autism-bot
 │   │   └── utils.py     # Utility functions for message preprocessing
 │   ├── discord_utils
 │   │   ├── message_fetcher.py  # Fetches messages from Discord
-│   │   └── user_stats.py        # Calculates user statistics
 │   └── config.py        # Configuration settings for the bot
 ├── requirements.txt      # Lists project dependencies
 └── README.md             # Documentation for the project
@@ -32,7 +30,7 @@ discord-autism-bot
 1. Clone the repository:
    ```
    git clone <repository-url>
-   cd discord-autism-bot
+   cd a-discord-bot
    ```
 
 2. Install the required dependencies:
