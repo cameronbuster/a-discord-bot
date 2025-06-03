@@ -2,8 +2,8 @@
 import os
 
 
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-DEV_GUILD_ID = int(os.getenv("DEV_GUILD_ID"))
+BOT_TOKEN = os.environ.get("DISCORD_BOT")
+DEV_GUILD_ID = 492099042935832576
 MODEL_NAME = "all-MiniLM-L6-v2"
 CHANNEL_MESSAGE_HISTORY_LIMIT = 100  # Number of messages to analyze for channel-level autism
 USER_MESSAGE_HISTORY_LIMIT = 100  # Number of messages to analyze for user-level autism

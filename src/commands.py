@@ -1,6 +1,7 @@
 # filepath: discord-autism-bot/src/main.py
 
 import discord
+import asyncio
 
 from discord import app_commands
 from discord_utils.message_fetcher import fetch_recent_channel_messages, fetch_recent_user_messages
@@ -25,38 +26,38 @@ async def register_commands(bot: discord.Client):
 
     @tree.command(name="measurechannelautism", description="Determine how autistic the channel is.", guild=discord.Object(id=DEV_GUILD_ID))
     @app_commands.describe(channel="The channel in question")
-    async def channel_autism(interaction: discord.Interaction, channel: str):
+    async def channel_autism(interaction: discord.Interaction, channel: discord.TextChannel):
         
         # Pause the response to the interaction. Eventually respond to the interaction via the handler
         await interaction.response.defer()
 
         # Fetch the last x messages from the channel
-        channel_messages = await fetch_recent_channel_messages(channel=message.channel, lookback=CHANNEL_MESSAGE_HISTORY_LIMIT)
-
+        channel_messages = await fetch_recent_channel_messages(channel=channel, lookback=CHANNEL_MESSAGE_HISTORY_LIMIT)
+        print(channel_messages)
         # Measure autism levels for the most recent messages in the channel
         autism_model = AutismModel()
-        autism_calculation = [autism_model.measure_autism(msg.content) for msg in channel_messages]
+        autism_calculation = await asyncio.gather(*(autism_model.measure_autism(msg) for msg in channel_messages))
 
-        message = (f'{message.channel} autism calculation complete: {autism_calculation:.2f}\n')
+        message = (f'{channel} autism calculation complete: {autism_calculation}')
 
-        await interaction.followup(message)
+        await interaction.followup.send(message)
 
 
     @tree.command(name="measureuserautism", description="Determine how autistic the user is.", guild=discord.Object(id=DEV_GUILD_ID))
     @app_commands.describe(username="The retard in question")
-    async def user_autism(interaction: discord.Interaction, username: str):
+    async def user_autism(interaction: discord.Interaction, username: discord.User, channel: discord.TextChannel):
         
         # Pause the response to the interaction. Eventually respond to the interaction via the handler
         await interaction.response.defer()
 
         # Fetch the last x messages from the channel
-        user_messages = await fetch_recent_user_messages(channel=message.channel, lookback=USER_MESSAGE_HISTORY_LIMIT)
+        user_messages = await fetch_recent_user_messages(username=username, channel=channel, lookback=USER_MESSAGE_HISTORY_LIMIT)
 
         # Measure autism levels for the most recent messages in the channel
         autism_model = AutismModel()
-        autism_calculation = [autism_model.measure_autism(msg.content) for msg in user_messages]
+        autism_calculation = await asyncio.gather(*(autism_model.measure_autism(msg.content) for msg in user_messages))
 
-        message = (f'{username} autism calculation complete: {autism_calculation:.2f}\n')
+        message = (f'{user_autism} autism calculation complete: {autism_calculation}')
 
         await interaction.followup(message)
 

@@ -1,4 +1,4 @@
-def fetch_recent_channel_messages(channel, lookback):
+async def fetch_recent_channel_messages(channel, lookback):
     """
     Fetches the last x number of messages from a specified Discord channel.
 
@@ -9,11 +9,10 @@ def fetch_recent_channel_messages(channel, lookback):
     Returns:
         A list of messages fetched from the channel.
     """
-    messages = channel.history(limit=lookback).flatten()
-    return messages
+    return [msg.content async for msg in channel.history(limit=lookback)]
 
 
-def fetch_recent_user_messages(user, channel, lookback):
+async def fetch_recent_user_messages(username, channel, lookback):
     """
     Fetches the last x number of messages from a specific user in a specified channel.
 
@@ -25,6 +24,6 @@ def fetch_recent_user_messages(user, channel, lookback):
     Returns:
         A list of messages from the user in the channel.
     """
-    messages = channel.history(limit=lookback).flatten()
-    user_messages = [msg for msg in messages if msg.author == user]
+    messages = channel.history(limit=lookback)
+    user_messages = [msg for msg in messages if msg.author == username]
     return user_messages
